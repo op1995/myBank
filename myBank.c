@@ -1,10 +1,10 @@
 #include "myBank.h"
 #include <stdio.h>
 
-
-double arr[2][50] = {0};
+double arr[arrayLength][arrayWidth] = {0};
 int full = 0;
 int nextAvilableAccount = 0;
+
 
 void Open(){
 	if(full==1){
@@ -12,7 +12,7 @@ void Open(){
 		return;
 	}
 
-	double deposit;
+	double deposit = 0;
 	printf("Initial deposit?: ");
 	if(scanf("%lf",&deposit)==1){
 
@@ -24,23 +24,23 @@ void Open(){
 		deposit = (double)temp/100;
 		arr[0][nextAvilableAccount] = 1; //mark account as open
 		arr[1][nextAvilableAccount] = deposit;
-		printf("Your new account number is %d.\n", (nextAvilableAccount+901));
+		printf("Your new account number is %d.\n", (nextAvilableAccount+NineHunderedAndOne));
 		changeNextAccount();
 	}
 	else{printf("Illegal value entered for initial deposit! A new account was not opened!\n");}
 } //end Open
 
 void Biror(){
-	int AN; //Account Number
+	int AN = 0; //Account Number
 	printf("Account number?: ");
 	if(scanf("%d",&AN)==1){
-		AN = AN - 901;
-		if(AN<0||AN>49){
+		AN = AN - NineHunderedAndOne;
+		if(AN<firstArraySlot||AN>lastArraySlot){
 			printf("Illegal account number! Will not check for remaining money in bank!\n");
 			return;
 		}
 		if(arr[0][AN]==1){
-			printf("The remaining amount in bank account %d is - %.2lf\n", AN+901, arr[1][AN]);
+			printf("The remaining amount in bank account %d is - %.2lf\n", AN+NineHunderedAndOne, arr[1][AN]);
 		}
 		else{
 			printf("The requested account number is curently not active.\n");
@@ -53,11 +53,11 @@ void Biror(){
 } //end Biror
 
 void Deposit(){
-	int AN; //Account Number
+	int AN = 0; //Account Number
 	printf("Account number?: ");
 	if(scanf("%d", &AN)==1){
-		AN = AN - 901;
-		if(AN<0||AN>49){
+		AN = AN - NineHunderedAndOne;
+		if(AN<firstArraySlot||AN>lastArraySlot){
 			printf("Illegal account number! Will not check for remaining money in bank!\n");
 			return;
 		}
@@ -66,7 +66,7 @@ void Deposit(){
 			return;
 		}
 
-		double depoist_ammount;
+		double depoist_ammount = 0;
 		printf("Amount?: ");
 		if(scanf("%lf",&depoist_ammount)==1){
 			if(depoist_ammount<0){
@@ -77,7 +77,7 @@ void Deposit(){
 			int temp = (depoist_ammount * 100);
 			depoist_ammount = (double)temp/100;
 			arr[1][AN] = arr[1][AN] + depoist_ammount;
-			printf("The new amount in the bank account %d is now: %.2lf\n", AN+901, arr[1][AN]);
+			printf("The new amount in the bank account %d is now: %.2lf\n", AN+NineHunderedAndOne, arr[1][AN]);
 		}
 
 		else{
@@ -93,11 +93,11 @@ void Deposit(){
 }//end deposit
 
 void Withdrawal(){
-	int AN; //Account Number
+	int AN = 0; //Account Number
 	printf("Account number?: ");
 	if(scanf("%d", &AN)==1){
-	AN = AN - 901;
-	if(AN<0||AN>49){
+	AN = AN - NineHunderedAndOne;
+	if(AN<firstArraySlot||AN>lastArraySlot){
 		printf("Illegal account number!\n");
 		return;
 	}
@@ -105,7 +105,7 @@ void Withdrawal(){
 		printf("The requested account number is curently not active. Not continuing witht the withdrawl process.\n");
 		return;
 	}
-	double withdrawlAmount;
+	double withdrawlAmount = 0;
 	printf("Amount?: ");
 	if(scanf("%lf",&withdrawlAmount)==1){
 		if(withdrawlAmount<0){
@@ -116,7 +116,7 @@ void Withdrawal(){
 			int temp = (withdrawlAmount * 100);
 			withdrawlAmount = (double)temp/100;
 			arr[1][AN] = arr[1][AN] - withdrawlAmount;
-			printf("As you requested, from bank account %d, %.2lf was withdrawn.\nNew balance in the account is %.2lf\n", AN+901, withdrawlAmount, arr[1][AN]);
+			printf("As you requested, from bank account %d, %.2lf was withdrawn.\nNew balance in the account is %.2lf\n", AN+NineHunderedAndOne, withdrawlAmount, arr[1][AN]);
 		}
 		else{
 			printf("The ammount you asked to withdraw from the account is greater than the current balance in the requested account. Not withdrawing.\n");
@@ -132,11 +132,11 @@ void Withdrawal(){
 
 
 void Close(){
-	int AN; //Account Number
+	int AN = 0; //Account Number
 	printf("Account number?: ");
 	if(scanf("%d", &AN)==1){
-	AN = AN - 901;
-	if(AN<0||AN>49){
+	AN = AN - NineHunderedAndOne;
+	if(AN<firstArraySlot||AN>lastArraySlot){
 		printf("Illegal account number!\n");
 		return;
 	}
@@ -146,7 +146,7 @@ void Close(){
 	}
 	arr[0][AN] = 0;
 	arr[1][AN] = 0;
-	printf("As requested, account number %d was closed.\n", AN+901);
+	printf("As requested, account number %d was closed.\n", AN+NineHunderedAndOne);
 	full = 0; //An account was removed. Therefore there is an avilable account, for sure.
 	}
 
@@ -157,7 +157,7 @@ void Close(){
 }//end Close
 
 void Interest(){
-	double IR; // Interest Rate
+	double IR = 0; // Interest Rate
 	printf("Interest rate?: ");
 	if(scanf("%lf",&IR)==1){
 		if(IR<0){
@@ -166,7 +166,7 @@ void Interest(){
 		}
 		IR = IR/100;
 		double multiply = 1+IR;
-		int temp;
+		int temp = 0;
 		for(int i = 0; i<=49; i++){
 			if(arr[0][i]==1){
 				temp = ((arr[1][i] * multiply)*100);
@@ -186,7 +186,7 @@ void Printing(){
 	for(int i = 0; i<=49; i++){
 		if(arr[0][i]==1){
 			somethingWasPrinted=1;
-			printf("The current balance in account number %d is - %.2lf.\n", i+901, arr[1][i]);
+			printf("The current balance in account number %d is - %.2lf.\n", i+NineHunderedAndOne, arr[1][i]);
 		}
 	}
 	if(somethingWasPrinted){printf("Those were all the currently active accounts.\n");}
@@ -219,22 +219,5 @@ void changeNextAccount(){
 
 		if (i==49){i=0;}
 	}
-
-
-
-	// int previousNextAccount = nextAvilableAccount;
-	// if((nextAvilableAccount<49) && (arr[0][nextAvilableAccount+1]=0)){
-	// 	nextAvilableAccount+=1;
-	// 	return;
-	// }
-
-
-	// for(int i = nextAvilableAccount; i<50 ; i++){
-	// 	if (arr[i][0] == 0){
-	// 		nextAvilableAccount = i;
-	// 		return;
-	// 	}
-	// }
-	// full = 1; //only if you couldn't find any un-initialized account in the arry, the arry is full.
 }
 

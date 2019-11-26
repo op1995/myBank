@@ -3,7 +3,7 @@
 
 int main(){
     int keepWorking=1;
-    char operator;
+    char operator='a'; //initing to a value, doesn't matter which.
     while(keepWorking){
         printf("Transaction type?: ");
         if(scanf(" %c", &operator)==1){
